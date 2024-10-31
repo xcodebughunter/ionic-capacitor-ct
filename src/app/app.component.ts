@@ -1,13 +1,22 @@
 import { Component } from '@angular/core';
 import { SplashScreen } from '@capacitor/splash-screen'
+import { CleverTap } from '@awesome-cordova-plugins/clevertap/ngx';
+import { Platform } from '@ionic/angular';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  constructor() {
-    this.initializeApp();
+  constructor(platform: Platform, clevertap: CleverTap) {
+    platform.ready().then(() => {
+      // once the platform is ready and plugins are available,
+      // do all higher level native things
+      clevertap.notifyDeviceReady();
+      this.initializeApp();
+    })
   }
 
   initializeApp() {
